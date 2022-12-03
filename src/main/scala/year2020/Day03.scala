@@ -13,7 +13,7 @@ val test =
     |#...##....#
     |.#..#...#.#""".stripMargin
 
-val input =
+val day03Input =
   """.....#.##......#..##..........#
     |##.#.##..#............##....#..
     |......###...#..............#.##
@@ -350,7 +350,7 @@ def toGrid(input: String): Grid =
 def countTrees(grid: Grid, move: Point) =
   (0 until grid.rows by move.y).count { y => grid.grid(y * grid.cols + ((y * (move.x.toDouble / move.y.toDouble)).toInt % grid.cols)) == '#' }
 
-def countTrees2 = countTrees.curried(toGrid(input))
+def countTrees2 = countTrees.curried(toGrid(day03Input))
 
 object Day03 {
   def main(args: Array[String]): Unit =

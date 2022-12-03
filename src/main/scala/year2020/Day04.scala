@@ -15,7 +15,7 @@ val test =
     |hcl:#cfa07d eyr:2025 pid:166559648
     |iyr:2011 ecl:brn hgt:59in""".stripMargin
 
-val input =
+val day4Input =
   """hgt:159cm
     |pid:561068005 eyr:2025 iyr:2017 cid:139 ecl:blu hcl:#ceb3a1
     |byr:1940
@@ -1090,8 +1090,8 @@ val validColors = List("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
 
 object Day04 {
   def main(args: Array[String]): Unit = {
-    println(part1(input))
-    println(part2(input))
+    println(part1(day4Input))
+    println(part2(day4Input))
   }
 }
 
