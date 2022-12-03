@@ -1,6 +1,6 @@
 package year2022
 
-object Day04 {
+object Day03 {
 
   val test =
     """vJrwpWtwJgWrhcsFMMfFFhFp
