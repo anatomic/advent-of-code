@@ -1010,10 +1010,31 @@ object Day04 {
                 |16-95,15-96""".stripMargin
 
   def main(args: Array[String]): Unit = {
-    println(input.split("\n").map(getRanges).count(countOverlap))
+//    println(input.split("\n").map(getRanges).count(countOverlap))
+    println(part1(input))
+    println(part2(input))
   }
 
 }
+
+// a-b,c-d
+// 2-6,1-7 - (a >= c && b <= d) or (a <= c && b >= d)
+// 1-7,2-6 - (a >= c && b <= d) or (a <= c && b >= d)
+def part1(input: String) =
+  input
+    .split("\n")
+    .map(_.split("[-,]").map(_.toInt))
+    .count { ints => (ints(0) <= ints(2)) && (ints(1) >= ints(3)) || ((ints(0) >= ints(2)) && (ints(1) <= ints(3)))}
+
+// a-b,c-d
+// 2-6,1-7 - (a <= d) and (b >= c)
+// 1-7,2-6 - (a <= d) and (b >= c)
+def part2(input: String) =
+  input
+    .split("\n")
+    .map(_.split("[-,]").map(_.toInt))
+    .count { ints => (ints(0) <= ints(3)) && (ints(1) >= ints(2))}
+
 def getRanges(input: String) =
   input match
     case s"$a-$b,$c-$d" => (a.toInt to b.toInt, c.toInt to d.toInt)
