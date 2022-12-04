@@ -2,7 +2,7 @@ package year2022
 
 object Day03 {
 
-  val test =
+  private val test =
     """vJrwpWtwJgWrhcsFMMfFFhFp
       |jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
       |PmmdzqPrVvPwwTWBwg
@@ -11,7 +11,7 @@ object Day03 {
       |CrZsJsPPZsGzwwsLwLmpwMDw
       |""".stripMargin
 
-  val input =
+  private val input =
     """lvcNpRHDCnTLCJlL
       |RFZggsMrjTFGCJmdmd
       |srsBZgBqwBqRZbzqtHpzzDNtHDqV
@@ -318,13 +318,13 @@ object Day03 {
 
   def part1(input: String) =
     input.split("\n")
-      .map(split andThen intersectDistinct andThen toNumber)
+      .map(split andThen intersectDistinct andThen toNumber2)
       .sum
 
   def part2(input: String) =
     input.split("\n")
       .sliding(3, 3)
-      .map(intersectArrayDistinct andThen toNumber)
+      .map(intersectArrayDistinct andThen toNumber2)
       .sum
 }
 
@@ -336,7 +336,10 @@ def intersectDistinct(a: String, b: String) =
 def intersectArrayDistinct(strings: Array[String]) =
   strings.reduce(intersectDistinct)
 
+// Removes a match, cheers @makeusabrew!
+def toNumber2(c: String) =
+  (c.head.toInt - 38) % 58
 def toNumber(c: String) =
-  c(0) match
+  c.head match
     case c if c.isLower => c.toInt % 96
     case c if c.isUpper => (c.toInt % 64) + 26
