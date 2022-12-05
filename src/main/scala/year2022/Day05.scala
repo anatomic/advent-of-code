@@ -47,7 +47,6 @@ object Day05 {
     stacks(a).remove(0, count)
     stacks
 
-
   private def parseMoves(instructions: String) = instructions match
     case s"move $count from $a to $b" => (count.toInt, a.toInt, b.toInt)
 }
