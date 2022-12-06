@@ -19,7 +19,7 @@ object Day05 {
     val now = System.nanoTime()
     val input = Source.fromResource("2022/day05.txt")
     val Array(stacks, moves) = input.mkString.split("\n\n")
-    val result = moves.linesIterator.foldLeft(parseStacks(stacks))(part2)
+    val result = moves.linesIterator.foldLeft(parseStacks(stacks))(part1)
     for
       i <- 1 to result.size
     do
@@ -35,10 +35,8 @@ object Day05 {
 
   private def part1(stacks: Map[Int, mutable.Stack[Char]], instructions: String): Map[Int, mutable.Stack[Char]] =
     val (count, a, b) = parseMoves(instructions)
-    for
-      _ <- 1 to count
-    do
-      stacks(b).push(stacks(a).pop())
+    stacks(b).pushAll(stacks(a).take(count))
+    stacks(a).remove(0, count)
     stacks
 
   private def part2(stacks: Map[Int, mutable.Stack[Char]], instructions: String): Map[Int, mutable.Stack[Char]] =

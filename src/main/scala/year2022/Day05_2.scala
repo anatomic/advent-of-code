@@ -30,5 +30,4 @@ object Day05_2 {
 
     println(s"\nCompleted in ${(System.nanoTime() - now) / 1000000}ms")
   }
-
 }
