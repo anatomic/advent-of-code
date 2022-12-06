@@ -13,7 +13,7 @@ object Day06 {
   }
 
   private def decode(window: Int, code: String) =
-    input.zipWithIndex
+    code.zipWithIndex
       .sliding(window)
       .find(_.map(_._1).distinct.size == window)
       .map(_.last._2 + 1)
