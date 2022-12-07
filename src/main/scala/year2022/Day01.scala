@@ -2264,4 +2264,7 @@ def sumOf(input: String): Int =
   input
     .split("\n\n")
     .map(_.split("\n").map(_.toInt).sum)
-    .sorted.reverse.take(3).sum
+    .sorted
+    .reverse
+    .take(3)
+    .sum
