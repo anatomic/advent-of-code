@@ -33,8 +33,7 @@ object Day07 {
               .split("/")
               .foldLeft("") { case (k, part) =>
                 val p = k + "/" + part
-                val total = files.getOrElse(p, 0L)
-                files(p) = s + total
+                files(p) = s + files.getOrElse(p, 0L)
                 p
               }
             (cwd, files)
