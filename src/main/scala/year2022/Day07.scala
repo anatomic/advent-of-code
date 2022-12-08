@@ -8,6 +8,7 @@ import scala.util.matching.Regex
 object Day07 {
   def main(args: Array[String]): Unit = {
     val dirs = parseInput("2022/day07.txt")
+
     val part1 = dirs.values.filter(_ < 100000).sum
     println(part1)
 
@@ -22,20 +23,17 @@ object Day07 {
     Using(Source.fromResource(fileName)) { input =>
       input
         .getLines()
-        .drop(1)
         .foldLeft(
           ("", mutable.Map[String, Long]())
         ) {
           case ((cwd, files), s"$$ cd $dir") => (nextPath(cwd, dir), files)
           case ((cwd, files), file(size, _)) =>
-            val s = size.toLong
             cwd
               .split("/")
-              .foldLeft("") { case (k, part) =>
-                val p = k + "/" + part
-                files(p) = s + files.getOrElse(p, 0L)
-                p
+              .foldLeft(List("")) { (k, part) =>
+                s"${k.head}/$part" :: k
               }
+              .foreach(p => files(p) = size.toLong + files.getOrElse(p, 0L))
             (cwd, files)
           case (agg, _) => agg
         }
@@ -43,6 +41,6 @@ object Day07 {
 
   private def nextPath(cwd: String, p: String) = p match
     case ".." => cwd.split("/").init.mkString("/")
-    case "/"  => "/"
-    case _    => cwd + "/" + p
+    case "/" => "/"
+    case _ => cwd + "/" + p
 }
