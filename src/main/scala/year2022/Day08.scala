@@ -7,75 +7,57 @@ object Day08 {
   def main(args: Array[String]): Unit =
     Using(Source.fromResource("2022/day08.txt")) { input =>
       val (rows, cols, grid) = parseGrid(input)
-      part1(rows, cols, grid)
-      part2(rows, cols, grid)
+      println(part1(rows, cols, grid))
+      println(part2(rows, cols, grid))
     }
 }
 
-private def part1(rows: Int, cols: Int, grid: List[Int]) =
-  val result = grid.zipWithIndex
-    .map((tree, idx) =>
-      if isEdge(rows, cols, idx) then 1
-      else
-        checks(idx, rows, cols)
-          .map(points =>
-            if points.forall((x1, y1) => grid(y1 * cols + x1) < tree) then 1
-            else 0
-          )
-          .max
+private def part1(rows: Int, cols: Int, grid: Seq[Int]) =
+  grid.zipWithIndex
+    .count((tree, idx) =>
+      checks(coords(idx, cols), rows, cols)
+        .exists(points =>
+          points.forall((x1, y1) => grid(y1 * cols + x1) < tree)
+        )
     )
-    .sum
 
-  println(result)
-
-private def part2(rows: Int, cols: Int, grid: List[Int]) =
-  val result = grid.zipWithIndex
+private def part2(rows: Int, cols: Int, grid: Seq[Int]) =
+  grid.zipWithIndex
     .map((tree, idx) =>
-      checks(idx, rows, cols)
+      checks(coords(idx, cols), rows, cols)
         .map(points =>
-          if points.isEmpty then 0
-          else
-            val s = points
-              .takeWhile((x1, y1) => grid(y1 * cols + x1) < tree)
-              .size
-            Math.min(s + 1, points.size)
+          Math.min(
+            points
+              .segmentLength((x1, y1) => grid(y1 * cols + x1) < tree) + 1,
+            points.size
+          )
         )
         .product
     )
     .max
-  println(result)
 
-private def checks(idx: Int, rows: Int, cols: Int): Seq[Seq[(Int, Int)]] =
-  val (x, y) = coords(idx, cols)
-  val north =
-    for y1 <- 0 until y
-    yield (x, y1)
-
-  val south =
-    for y1 <- y + 1 until rows
-    yield (x, y1)
-
-  val west =
-    for x1 <- 0 until x
-    yield (x1, y)
-
-  val east =
-    for x1 <- x + 1 until cols
-    yield (x1, y)
-
-  List(north.reverse, east, south, west.reverse)
-private def printGrid(cols: Int, grid: List[Int]) =
-  grid.grouped(cols).foreach(row => println(row.mkString(" ")))
+// This is pretty bogus. Would be nicer to slice the original grid in some way
+private def checks(
+    coords: (Int, Int),
+    rows: Int,
+    cols: Int
+): Seq[Seq[(Int, Int)]] =
+  Vector(
+    (for y1 <- 0 until coords._2
+    yield (coords._1, y1)).reverse, // north
+    for x1 <- coords._1 + 1 until cols
+    yield (x1, coords._2), // east
+    for y1 <- coords._2 + 1 until rows
+    yield (coords._1, y1), // south
+    (for x1 <- 0 until coords._1
+    yield (x1, coords._2)).reverse // west
+  )
 
 private def parseGrid(input: BufferedSource) =
-  val grid = input.getLines().toList
+  val grid = input.getLines().toVector
   val cols = grid.head.size
   val rows = grid.size
   (rows, cols, grid.flatten.map(_.asDigit))
-
-private def isEdge(rows: Int, cols: Int, idx: Int): Boolean =
-  val (x, y) = coords(idx, cols)
-  ((x == 0) || (x == cols - 1)) || ((y == 0) || (y == rows - 1))
 
 private def coords(idx: Int, cols: Int): (Int, Int) =
   (idx % cols, idx / cols)
