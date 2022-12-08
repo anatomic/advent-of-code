@@ -46,5 +46,4 @@ object Day08_2 {
       grid(y).take(x).reverse,
       grid(y).drop(x + 1)
     )
-
 }
