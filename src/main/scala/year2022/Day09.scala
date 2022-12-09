@@ -18,22 +18,8 @@ object Day09 {
   )
 
   def main(args: Array[String]): Unit =
-    val a = System.nanoTime()
     println(visitedCount(2))
-    val b = System.nanoTime()
     println(visitedCount(10))
-    val c = System.nanoTime()
-    println(visitedCountImp(2))
-    val d = System.nanoTime()
-    println(visitedCountImp(10))
-    val e = System.nanoTime()
-
-    def t(s: Long, e: Long) = (e - s) / 1_000_000
-    println("Timings")
-    println(s"rope = 2, algo = fp, ${t(a, b)}ms")
-    println(s"rope = 10, algo = fp, ${t(b, c)}ms")
-    println(s"rope = 2, algo = imperative, ${t(c, d)}ms")
-    println(s"rope = 10, algo = imperative, ${t(d, e)}ms")
 
   private def visitedCount(n: Int) =
     input
