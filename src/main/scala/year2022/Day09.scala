@@ -29,7 +29,10 @@ object Day09 {
     input
       .flatMap { case s"$d $v" => d * v.toInt }
       .scanLeft(List.fill(n)((0, 0))) { case (snake, m) =>
-        snake.tail.scanLeft(moveHead(snake.head, m))(move)
+        snake.tail.scanLeft(moveHead(snake.head, m)) { case (a, b) =>
+          if (a._1 - b._1).abs <= 1 && (a._2 - b._2).abs <= 1 then b
+          else (b._1 + (a._1 - b._1).sign, b._2 + (a._2 - b._2).sign)
+        }
       }
       .map(_.last)
       .distinct
@@ -40,12 +43,6 @@ object Day09 {
     case 'D' => (p._1, p._2 - 1)
     case 'R' => (p._1 + 1, p._2)
     case 'L' => (p._1 - 1, p._2)
-
-  private def move(a: Point, b: Point) =
-    val dx = a._1 - b._1
-    val dy = a._2 - b._2
-    if dx.abs <= 1 && dy.abs <= 1 then b
-    else (b._1 + dx.sign, b._2 + dy.sign)
 
   private def visitedCountImp(n: Int) =
     val snake = mutable.ArrayBuffer.fill(n)((0, 0))
