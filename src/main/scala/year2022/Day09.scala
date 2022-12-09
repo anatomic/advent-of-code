@@ -6,7 +6,17 @@ import scala.io.Source
 
 object Day09 {
   type Point = (Int, Int)
-  val input = Source.fromResource("2022/09.txt").getLines().toVector
+  val input = Source.fromResource("2022/09.txt").getLines().toVector.flatMap {
+    case s"$d $v" => d * v.toInt
+  }
+
+  val moves = Map[Char, Point](
+    'U' -> (0, 1),
+    'D' -> (0, -1),
+    'L' -> (-1, 0),
+    'R' -> (1, 0)
+  )
+
   def main(args: Array[String]): Unit =
     val a = System.nanoTime()
     println(visitedCount(2))
@@ -27,9 +37,10 @@ object Day09 {
 
   private def visitedCount(n: Int) =
     input
-      .flatMap { case s"$d $v" => d * v.toInt }
       .scanLeft(List.fill(n)((0, 0))) { case (snake, m) =>
-        snake.tail.scanLeft(moveHead(snake.head, m)) { case (a, b) =>
+        snake.tail.scanLeft(
+          (snake.head._1 + moves(m)._1, snake.head._2 + moves(m)._2)
+        ) { case (a, b) =>
           if (a._1 - b._1).abs <= 1 && (a._2 - b._2).abs <= 1 then b
           else (b._1 + (a._1 - b._1).sign, b._2 + (a._2 - b._2).sign)
         }
@@ -38,23 +49,12 @@ object Day09 {
       .distinct
       .size
 
-  private def moveHead(p: Point, cmd: Char) = cmd match
-    case 'U' => (p._1, p._2 + 1)
-    case 'D' => (p._1, p._2 - 1)
-    case 'R' => (p._1 + 1, p._2)
-    case 'L' => (p._1 - 1, p._2)
-
   private def visitedCountImp(n: Int) =
     val snake = mutable.ArrayBuffer.fill(n)((0, 0))
     val visited = mutable.Set[Point]((0, 0))
-    for i <- input.flatMap { case s"$d $v" => d * v.toInt }
+    for i <- input
     do
-      val h = snake.head
-      i match
-        case 'U' => snake(0) = (h._1, h._2 + 1)
-        case 'D' => snake(0) = (h._1, h._2 - 1)
-        case 'L' => snake(0) = (h._1 - 1, h._2)
-        case 'R' => snake(0) = (h._1 + 1, h._2)
+      snake(0) = (snake.head._1 + moves(i)._1, snake.head._2 + moves(i)._2)
 
       for k <- 1 until snake.size
       do
