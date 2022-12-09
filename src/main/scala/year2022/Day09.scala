@@ -6,9 +6,14 @@ import scala.io.Source
 
 object Day09 {
   type Point = (Int, Int)
-  val input = Source.fromResource("2022/09.txt").getLines().toVector.flatMap {
-    case s"$d $v" => d * v.toInt
-  }
+  val input = Source
+    .fromResource("2022/09.txt")
+    .getLines()
+    .flatMap { case s"$d $v" =>
+      d * v.toInt
+    }
+    .map(moves)
+    .toSeq
 
   val moves = Map[Char, Point](
     'U' -> (0, 1),
@@ -25,7 +30,7 @@ object Day09 {
     input
       .scanLeft(List.fill(n)((0, 0))) { case (snake, m) =>
         snake.tail.scanLeft(
-          (snake.head._1 + moves(m)._1, snake.head._2 + moves(m)._2)
+          (snake.head._1 + m._1, snake.head._2 + m._2)
         ) { case (a, b) =>
           if (a._1 - b._1).abs <= 1 && (a._2 - b._2).abs <= 1 then b
           else (b._1 + (a._1 - b._1).sign, b._2 + (a._2 - b._2).sign)
@@ -40,7 +45,7 @@ object Day09 {
     val visited = mutable.Set[Point]((0, 0))
     for i <- input
     do
-      snake(0) = (snake.head._1 + moves(i)._1, snake.head._2 + moves(i)._2)
+      snake(0) = (snake.head._1 + i._1, snake.head._2 + i._2)
 
       for k <- 1 until snake.size
       do
