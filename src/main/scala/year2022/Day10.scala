@@ -20,8 +20,8 @@ object Day10 {
   def part2 =
     input
       .grouped(40)
-      .map(row =>
-        row.zipWithIndex
+      .map(
+        _.zipWithIndex
           .map((col, x) =>
             if col - 1 <= x && x <= col + 1 then '#'
             else '.'
