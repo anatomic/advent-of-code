@@ -22,10 +22,7 @@ object Day10 {
       .grouped(40)
       .map(
         _.zipWithIndex
-          .map((col, x) =>
-            if col - 1 <= x && x <= col + 1 then '#'
-            else '.'
-          )
+          .map((col, x) => if (x - col).abs <= 1 then '#' else '.')
           .mkString
       )
       .mkString("\n")
