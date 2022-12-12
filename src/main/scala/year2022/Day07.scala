@@ -7,7 +7,7 @@ import scala.util.matching.Regex
 
 object Day07 {
   def main(args: Array[String]): Unit = {
-    val dirs = parseInput("2022/day07.txt")
+    val dirs = parseInput("2022/07.txt")
 
     val part1 = dirs.values.filter(_ < 100000).sum
     println(part1)

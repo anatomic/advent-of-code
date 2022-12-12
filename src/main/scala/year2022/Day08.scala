@@ -5,7 +5,7 @@ import scala.util.Using
 
 object Day08 {
   def main(args: Array[String]): Unit =
-    Using(Source.fromResource("2022/day08.txt")) { input =>
+    Using(Source.fromResource("2022/08.txt")) { input =>
       val (rows, cols, grid) = parseGrid(input)
       println(part1(rows, cols, grid))
       println(part2(rows, cols, grid))

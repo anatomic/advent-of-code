@@ -12,7 +12,7 @@ import scala.util.Try
 object Day05 {
   def main(args: Array[String]): Unit =
     val now = System.nanoTime()
-    val input = Source.fromResource("2022/day05.txt")
+    val input = Source.fromResource("2022/05.txt")
     val Array(stacks, moves) = input.mkString.split("\n\n")
     val result = moves.linesIterator.foldLeft(parseStacks(stacks))(part1)
     for i <- 1 to result.size

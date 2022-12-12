@@ -8,7 +8,7 @@ object Day05_2 {
 
   def main(args: Array[String]): Unit = {
     val now = System.nanoTime()
-    Using(Source.fromResource("2022/day05.txt")) { input =>
+    Using(Source.fromResource("2022/05.txt")) { input =>
       val lines = input.getLines()
       val table = lines.takeWhile(_.nonEmpty).toList.reverse.drop(1)
       val startingStacks = table

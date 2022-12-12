@@ -6,7 +6,7 @@ object Day08_2 {
   // Initially had some bizarre desire to not use a multi-dimensional grid.
   val grid =
     Source
-      .fromResource("2022/day08.txt")
+      .fromResource("2022/08.txt")
       .getLines()
       .map(_.map(_.asDigit).toVector)
       .toVector
