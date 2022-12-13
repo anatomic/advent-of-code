@@ -30,6 +30,7 @@ object Day05_2 {
               .updated(to, part2(to) + part2(from).takeRight(count))
               .updated(from, part2(from).dropRight(count))
           )
+        case (a, _) => a
       }
       println(part1.map(_.lastOption.getOrElse("")).mkString)
       println(part2.map(_.lastOption.getOrElse("")).mkString)

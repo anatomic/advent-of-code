@@ -7,12 +7,12 @@ object Day08 {
   def main(args: Array[String]): Unit =
     Using(Source.fromResource("2022/08.txt")) { input =>
       val (rows, cols, grid) = parseGrid(input)
-      println(part1(rows, cols, grid))
-      println(part2(rows, cols, grid))
+      println(p1(rows, cols, grid))
+      println(p2(rows, cols, grid))
     }
 }
 
-private def part1(rows: Int, cols: Int, grid: Seq[Int]) =
+private def p1(rows: Int, cols: Int, grid: Seq[Int]) =
   grid.zipWithIndex
     .count((tree, idx) =>
       checks(coords(idx, cols), rows, cols)
@@ -21,7 +21,7 @@ private def part1(rows: Int, cols: Int, grid: Seq[Int]) =
         )
     )
 
-private def part2(rows: Int, cols: Int, grid: Seq[Int]) =
+private def p2(rows: Int, cols: Int, grid: Seq[Int]) =
   grid.zipWithIndex
     .map((tree, idx) =>
       checks(coords(idx, cols), rows, cols)
