@@ -52,5 +52,4 @@ object Day13_2 {
     (input ++ Seq(marker1, marker2)).sorted.zipWithIndex.collect {
       case (a, i) if (a == marker1) || (a == marker2) => i + 1
     }.product
-
 }
