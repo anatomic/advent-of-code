@@ -22,16 +22,16 @@ object Day12 {
     println(solve(Seq('S')))
     println(solve(Seq('S', 'a')))
 
-  def solve(startLetters: Seq[Char]) =
+  private def solve(startLetters: Seq[Char]) =
     (for
       (row, y) <- input.zipWithIndex
       (char, x) <- row.zipWithIndex
       if startLetters.contains(char)
     yield (x, y)).flatMap(findPath(input, _)).min
 
-  def findPath(grid: Seq[Seq[Char]], s: Point): Option[Int] =
+  private def findPath(grid: Seq[Seq[Char]], s: Point): Option[Int] =
     val toCheck = PriorityQueue[(Point, Int)]((s, 0))(
-      Ordering.by((p, score) => score)
+      Ordering.by((_, score) => score)
     ).reverse
     val visited = mutable.Set[Point]()
 
@@ -45,7 +45,7 @@ object Day12 {
 
     None
 
-  def neighbours(grid: Grid, p: Point): Seq[Point] =
+  private def neighbours(grid: Grid, p: Point): Seq[Point] =
     Seq(
       (p._1, p._2 + 1),
       (p._1, p._2 - 1),
@@ -58,13 +58,13 @@ object Day12 {
       )
     )
 
-  def inBounds(rows: Int, cols: Int, p: Point): Boolean =
+  private def inBounds(rows: Int, cols: Int, p: Point): Boolean =
     (p._1 >= 0 && p._1 < cols) && (p._2 >= 0 && p._2 < rows)
 
-  def isAllowed(a: Char, b: Char): Boolean =
+  private def isAllowed(a: Char, b: Char): Boolean =
     (normalise(b) - normalise(a)) < 2
 
-  def normalise(c: Char): Char =
+  private def normalise(c: Char): Char =
     c match
       case x if x == START  => 'a'
       case x if x == TARGET => 'z'
