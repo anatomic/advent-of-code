@@ -8,15 +8,18 @@ object Day14 {
   opaque type Point = (Int, Int)
 
   def main(args: Array[String]): Unit =
-    part1
+    println(parseInput)
 
   def parseInput =
     input
       .getLines()
       .map(
         _.split(" -> ")
-        .map(_.split(",").map(_.toInt))
+          .map(toPoint)
+          .toSeq
       )
+      .foreach(println)
 
-  
+    def toPoint(s: String) =
+      s.split(",").map(_.toInt).grouped(2).map(xy => (xy(0), xy(1)))
 }
