@@ -27,7 +27,7 @@ object Day14 {
 
   def main(args: Array[String]): Unit = {
     val p1 = fill(obstacles, obstacles.maxBy(_._2)._2)
-    val p2 = fill(obstacles + ((500, 0)), obstacles.maxBy(_._2)._2 + 1, 2)
+    val p2 = fill(obstacles + Entry, obstacles.maxBy(_._2)._2 + 1, 2)
     println((p1 -- obstacles).size)
     println((p2 -- obstacles).size)
   }
