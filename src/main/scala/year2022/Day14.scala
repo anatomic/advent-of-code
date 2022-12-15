@@ -60,5 +60,3 @@ object Day14 {
   private def toPoint(s: String) = s match
     case s"$x,$y" => (x.toInt, y.toInt)
 }
-
-//guesses
