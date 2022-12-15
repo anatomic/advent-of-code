@@ -1,8 +1,8 @@
 package year2022
 
-import scala.io.Source
 import scala.collection.mutable
 import scala.collection.mutable.PriorityQueue
+import scala.io.Source
 
 object Day12 {
   val input =
@@ -12,11 +12,11 @@ object Day12 {
       .map(_.toCharArray().toSeq)
       .toSeq
 
-  val START = 'S'
-  val TARGET = 'E'
+  private val START = 'S'
+  private val TARGET = 'E'
 
-  type Point = (Int, Int)
-  type Grid = Seq[Seq[Char]]
+  opaque type Point = (Int, Int)
+  opaque type Grid = Seq[Seq[Char]]
 
   def main(args: Array[String]): Unit =
     println(solve(Seq('S')))
@@ -29,19 +29,21 @@ object Day12 {
       if startLetters.contains(char)
     yield (x, y)).flatMap(findPath(input, _)).min
 
-  private def findPath(grid: Seq[Seq[Char]], s: Point): Option[Int] =
-    val toCheck = PriorityQueue[(Point, Int)]((s, 0))(
-      Ordering.by((_, score) => score)
-    ).reverse
+  private def findPath(grid: Grid, s: Point): Option[Int] =
+    val toCheck = mutable
+      .PriorityQueue[(Point, Int)]((s, 0))(
+        Ordering.by((_, score) => score)
+      )
+      .reverse
     val visited = mutable.Set[Point]()
 
     while toCheck.nonEmpty do
       val ((x, y), score) = toCheck.dequeue()
-      if input(y)(x) == TARGET then return Some(score)
+      if grid(y)(x) == TARGET then return Some(score)
 
       if !visited.contains((x, y)) then
         visited += ((x, y))
-        toCheck ++= neighbours(input, (x, y)).map((_, score + 1))
+        toCheck ++= neighbours(grid, (x, y)).map((_, score + 1))
 
     None
 
