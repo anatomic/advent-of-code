@@ -46,7 +46,7 @@ object Day15 {
       yield (dx, row)
     case _ => Seq()
 
-  private def part1(row: Int = 2000000) =
+  private def part1(row: Int = 2000000): Unit =
     println(
       (sensors.flatMap(pointsForRow(row)).toSet -- beacons
         .map(_.toPoint)
@@ -61,7 +61,7 @@ object Day15 {
   private def shell(p: Item) =
     p match
       case Item.Sensor(x, y, r) =>
-        (for
+        for
           dx <- 1 to r + 1
           dy = r + 1 - dx
         yield Seq(
@@ -69,7 +69,7 @@ object Day15 {
           (x + dx, y + dy),
           (x - dx, y - dy),
           (x - dx, y + dy)
-        ))
+        )
       case _ => Seq()
 
   private def inBounds(size: Int, p: Point) =
@@ -91,7 +91,7 @@ object Day15 {
     else if toCheck.size == 1 then None
     else check(all, toCheck.tail, size)
 
-  private def part2(size: Int) = {
+  private def part2(size: Int): Unit = {
     val s = sensors.sortBy(_.range).reverse
     check(s, s, size).foreach(println)
   }
