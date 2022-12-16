@@ -82,8 +82,7 @@ object Day15 {
       size: Int
   ): Option[Long] =
     val p = for
-      candidates <- shell(toCheck.head)
-      candidate <- candidates
+      candidate <- shell(toCheck.head).flatten
       if inBounds(size, candidate)
       if all.forall(_.inRange(candidate) == false)
     yield candidate
