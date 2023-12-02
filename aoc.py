@@ -19,6 +19,7 @@ cmd = f'curl https://adventofcode.com/{args.year}/day/{args.day}/input --cookie 
 output = subprocess.check_output(cmd, shell=True)
 output = output.decode("utf-8")
 
+os.makedirs(f"{args.year}/input", exist_ok=True)
 open(f"{args.year}/input/day{args.day}.txt", "w").write(output.strip())
 
 if args.init:
