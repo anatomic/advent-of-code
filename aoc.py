@@ -26,10 +26,11 @@ if args.init:
     open(f"{args.year}/day{args.day}.py", "w").write(
         """import os
 import re
-current_file = os.path.basename(__file__)
-current_path = os.path.relpath(__file__)
-year = current_path.split("/")[0]
-day, ext = os.path.splitext(current_file)
+from pathlib import Path
+
+current_path = Path(__file__).resolve()
+year = current_path.parts[-2]
+day = current_path.stem
 
 f = open(f"{year}/input/{day}.txt", "r")
 input = f.read()
