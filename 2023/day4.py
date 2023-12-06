@@ -1,8 +1,4 @@
-import os
-import re
-import math
-from itertools import islice
-from collections import defaultdict, deque
+from collections import defaultdict
 from pathlib import Path
 
 current_path = Path(__file__).resolve()
@@ -25,14 +21,13 @@ p1 = 0
 p2 = defaultdict(int)
 for i, line in enumerate(input.splitlines()):
     p2[i] += 1
-    card, numbers = line.split(': ')
-    a, b = numbers.split(' | ')
+    card, numbers = line.split(": ")
+    a, b = numbers.split(" | ")
     winners = len(set(a.split()) & set(b.split()))
     if winners > 0:
-        p1 += 2**(winners-1)
-    for j in range(i+1, i+1+winners):
+        p1 += 2 ** (winners - 1)
+    for j in range(i + 1, i + 1 + winners):
         p2[j] += p2[i]
-
 
 print("p1", p1)
 print("p2", sum(p2.values()))
