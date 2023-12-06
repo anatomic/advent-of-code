@@ -72,8 +72,8 @@ class Mappings:
     def apply_range(self, src_range: list((int, int))) -> list((int, int)):
         output = []
         for src, dest, count in self.m:
-            # There are three combinations, not covered, partially covered, totally covered
-            # If a range is altered by a mapping, the changed section won't be altered again
+            # There are three combinations, start, intersect, end
+            # If a range is altered by a mapping, the intersect won't be altered again
             e = src + count
             t = []
             while src_range:
