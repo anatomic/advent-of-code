@@ -19,9 +19,6 @@ KTJJT 220
 QQQJA 483
 """.strip()
 
-# parse the cards, sort them, determine winings for each hand and return the sum
-hands = [(line.split()[0], int(line.split()[1])) for line in input.splitlines()]
-
 # Hand              Number of different cards
 # Five of a kind    1 (5)
 # Four of a kind    2 (4 + 1)
@@ -31,15 +28,15 @@ hands = [(line.split()[0], int(line.split()[1])) for line in input.splitlines()]
 # One pair          4 (2 + 1 + 1 + 1)
 # High card         5 (1 + 1 + 1 + 1 + 1)
 
+# parse the cards, sort them, determine winings for each hand and return the sum
+hands = [(line.split()[0], int(line.split()[1])) for line in input.splitlines()]
+
 def update_hand(hand: str, part2: bool = False):
     hand = hand.replace("T", chr(ord("9") + 1))
     hand = hand.replace("J", chr(ord("1") - 1) if part2 else chr(ord("9") + 2))
     hand = hand.replace("Q", chr(ord("9") + 3))
     hand = hand.replace("K", chr(ord("9") + 4))
-    hand = hand.replace("A", chr(ord("9") + 5))
-
-    return hand
-
+    return hand.replace("A", chr(ord("9") + 5))
 
 def score(hand: str, part2: bool = False):
     cards = defaultdict(int)
@@ -54,7 +51,6 @@ def score(hand: str, part2: bool = False):
 
     if part2:
         if len(cards) == 0:
-            # all jokers!
             cards = [5]
         else:
             cards = cards[:-1] + [cards[-1] + jokers]
@@ -75,9 +71,6 @@ def score(hand: str, part2: bool = False):
             return (2, hand)
         case [1, 1, 1, 1, 1]:
             return (1, hand)
-        case _:
-            assert False, "Hand didn't map to a score"
-
 
 for part2 in [False, True]:
     ranked = sorted(hands, key=lambda h: score(h[0], part2))
