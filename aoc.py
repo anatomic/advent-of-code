@@ -24,8 +24,7 @@ open(f"{args.year}/input/day{args.day}.txt", "w").write(output.strip())
 
 if args.init:
     open(f"{args.year}/day{args.day}.py", "w").write(
-        """import os
-import re
+        """
 from pathlib import Path
 
 current_path = Path(__file__).resolve()
@@ -34,7 +33,7 @@ day = current_path.stem
 
 f = open(f"{year}/input/{day}.txt", "r")
 input = f.read()
-"""
+""".strip()
     )
 
 print("\n".join(output.split("\n")[:10]), file=sys.stderr)
