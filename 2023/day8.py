@@ -1,3 +1,4 @@
+import math
 import re
 import sys
 import itertools
@@ -19,31 +20,22 @@ for line in lines[2:]:
     choices[key] = {"L": left, "R": right}
 
 p1 = 0
-p2 = 0
 pos = 'AAA'
-positions = [x for x in choices.keys() if x.endswith('A')]
-
 for command in itertools.cycle(lines[0]):
+    pos = choices[pos][command]
+    p1+=1
     if pos == 'ZZZ':
         print(p1)
         break
 
-    pos = choices[pos][command]
-    p1+=1
-
+p2 = 0
+positions = [x for x in choices.keys() if x.endswith('A')]
+results = []
 for command in itertools.cycle(lines[0]):
-    valid = True
-    N = []
-    for p in positions:
-        if choices[p][command].endswith('Z') == False:
-            valid = False
-        N.append(choices[p][command])
+    p2+=1
+    positions = [choices[p][command] for p in positions]
+    results.extend([p2 for p in positions if p.endswith('Z')])
 
-    if valid:
-        print("p2", p2)
-        sys.exit()
-    else:
-        p2 += 1
-        if p2 % 1000000 == 0:
-            print(N)
-        positions = N
+    if len(results) == len(positions):
+        print(math.lcm(*results))
+        break
