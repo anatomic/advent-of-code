@@ -46,3 +46,10 @@ for i in range(64):
             q.add((x,y))
     Q = list(q)
 print(len(Q))
+
+print(S, R, C)
+# part 2 - there's a straight line to each grid north, east, south and west
+# it's C/2 and R/2 steps to get to the edge, so each further grid will expand with the same
+# number of steps as the previous one (and take R or C to reach the next grid in the infinite series)
+# find out the number of whole grids that are going to be filled and then the number of steps into
+# the remainder grids - it'll be 4x the final number
