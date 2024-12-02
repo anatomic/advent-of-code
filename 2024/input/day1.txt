@@ -998,10 +998,3 @@
 39621   90125
 10029   95431
 85400   15291
-<html>
-<head><title>301 Moved Permanently</title></head>
-<body>
-<center><h1>301 Moved Permanently</h1></center>
-<hr><center>cloudflare</center>
-</body>
-</html>
