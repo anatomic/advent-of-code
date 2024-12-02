@@ -7,7 +7,7 @@ import sys
 session = os.environ["AOC_SESSION"]
 
 cli = argparse.ArgumentParser(description="Fetch the input for a specific day")
-cli.add_argument("--year", type=int, default=2023, help="Year to fetch")
+cli.add_argument("--year", type=int, default=2024, help="Year to fetch")
 cli.add_argument("--day", type=int, default=1, help="Day to fetch")
 cli.add_argument(
     "--init", help="Create the empty script for the day", action="store_true"
@@ -16,7 +16,7 @@ cli.add_argument(
 args = cli.parse_args()
 
 useragent = "https://github.com/anatomic/advent-of-code by ian@ian-thomas.net"
-cmd = f'curl https://adventofcode.com/{args.year}/day/{args.day}/input --cookie "session={session}" -A {useragent}'
+cmd = f'curl https://adventofcode.com/{args.year}/day/{args.day}/input --cookie "session={session}" -A "{useragent}"'
 output = subprocess.check_output(cmd, shell=True)
 output = output.decode("utf-8")
 

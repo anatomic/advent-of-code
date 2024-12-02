@@ -40,7 +40,7 @@ Return your response in Markdown format with the following sections:
     return completion.choices[0].message.content
 
 
-def fetch_advent_markdown(day, year=2023):
+def fetch_advent_markdown(day, year=2024):
     url = f"https://adventofcode.com/{year}/day/{day}"
     with sync_playwright() as p:
         browser = p.chromium.launch()
