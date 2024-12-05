@@ -20,22 +20,17 @@ def is_safe(vals: list[Tuple[int, int]]) -> bool:
 def make_pairs(vals: list[int]) -> list[Tuple[int, int]]:
     return list(pairwise(vals))
 
-part1 = 0
-part2 = 0
+part1, part2 = 0, 0
 for line in input:
     vals = list(map(int, line.split()))
-    safe = is_safe(make_pairs(vals))
-    if safe:
+    if is_safe(make_pairs(vals)):
         part1 += 1
         part2 += 1
     else:
-        damper_safe = False
         for i in range(len(vals)):
             if is_safe(make_pairs(vals[:i] + vals[i+1:])):
-                damper_safe = True
+                part2 += 1
                 break
-        if damper_safe:
-            part2 += 1
 
 print(part1)
 print(part2)
